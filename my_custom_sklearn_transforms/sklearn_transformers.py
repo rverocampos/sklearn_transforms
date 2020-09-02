@@ -13,7 +13,10 @@ class DropColumns(BaseEstimator, TransformerMixin):
         # Primeiro realizamos a cópia do dataframe 'X' de entrada
         data = X.copy()
         # Retornamos um novo dataframe sem as colunas indesejadas
-        return data.drop(labels=self.columns, axis='columns')
+        if data.columns.isin(self.columns).any(): 
+          return data.drop(labels=self.columns, axis='columns')
+        else:
+          return data
         
 class LimiteValorNota (BaseEstimator, TransformerMixin):
     def __init__(self, columns):
